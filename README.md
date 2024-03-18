@@ -50,4 +50,13 @@ public void WinCondition3() {
 }
 ```
 
+You can also listen in for when a game stops, by adding a function that takes a boolean argument (which represents if the game is continuing or not). 
+
+```csharp
+public void Start() {
+	BioTrack.OnFinish((cont) => {
+		//do things
+	});
+}
+```
 
