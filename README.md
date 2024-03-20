@@ -68,3 +68,6 @@ public void Start() {
 }
 ```
 
+## Questions/Support
+If you have any questions or need help implementing Biotrack into your game, please reach out to me on Discord: `@coasterfan5`
+
