@@ -1,0 +1,26 @@
+name: "release"
+
+on: ["push", "pull_request"]
+
+jobs:
+  release:
+    name: "Release"
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v4
+
+
+	  - name: "Zip"
+		run: "zip -r "biotrack.tar.gz" "./Biotrack Example/Assets/Biotrack Unity"
+	
+	  - name: "Release zip"
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: false
+          title: "Latest Build"
+          files: |
+            *.tar.gz
