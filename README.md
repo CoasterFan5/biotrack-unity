@@ -8,6 +8,14 @@ Unity bindings for the biotrack api + examples (this is one of the projects of a
 4. Attach the `BioTrackAttachable` script to a game object somewhere in your title screen
 5. Configure the game id and max players. 
 
+## Install JSON Parser
+1. Open Unity
+2. Go to Window > Package Manager
+3. Press the plus button
+4. Add from git URL
+5. Enter url: `com.unity.nuget.newtonsoft-json`
+6. Profit???
+
 ## Usage
 
 When a the number of join requests has reached the max player count, or `BioTrack.StartGame()` is called, the `OnStart` event will be called with a list of `JoinRequestUser` objects.
