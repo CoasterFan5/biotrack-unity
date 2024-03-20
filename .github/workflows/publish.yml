@@ -13,7 +13,7 @@ jobs:
 
 
     - name: "Zip"
-      run: zip -r "biotrack.tar.gz" "./Biotrack Example/Assets/Biotrack Unity"
+      run: zip -rj "biotrack.tar.gz" "./Biotrack Example/Assets/Biotrack Unity"
     
     - name: "Release zip"
       uses: "marvinpinto/action-automatic-releases@latest"
