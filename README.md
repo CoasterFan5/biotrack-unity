@@ -1,12 +1,16 @@
 # biotrack-unity
-Unity bindings for the biotrack api + examples (this is one of the projects of all time)
+Unity bindings for [Biotrack](https://github.com/LeoDog896/biotrack) + examples (this is one of the projects of all time)
+You should familiarize yourself with the [Biotrack Docs](https://leodog896.github.io/biotrack/) to better understand this project.
+
+## Quick Notice
+If you are very familiar with C# and web requests, these may not be the bindings for you. In an effort to make implementing Biotrack as simple as possible, the extendability of the [Biotrack API](https://leodog896.github.io/biotrack/api.html) has been reduced significantly. 
 
 ## Getting Started
-1. Clone this repository
+1. Download the latest release
 2. Open your project in unity
 3. Copy the `Biotrack` assets folder into your own project
 4. Attach the `BioTrackAttachable` script to a game object somewhere in your title screen
-5. Configure the game id and max players. 
+5. Configure the game ID and max players.
 
 ## Install JSON Parser
 1. Open Unity
@@ -14,18 +18,17 @@ Unity bindings for the biotrack api + examples (this is one of the projects of a
 3. Press the plus button
 4. Add from git URL
 5. Enter url: `com.unity.nuget.newtonsoft-json`
-6. Profit???
 
 ## Usage
 
 To get started with Biotrack, you will need to attach BioTrackAttachable to a game object in each scene. This will allow you to configure the game id and max players.
-Note, Biotrack can only be configured once, even if there are different configurations per scene.  
+Note that Biotrack can only be configured once, even if there are different configurations per scene.  
 
-When a the number of join requests has reached the max player count, or `BioTrack.StartGame()` is called, the `OnStart` event will be called with a list of `JoinRequestUser` objects.
+When the number of join requests has reached the max player count, or `BioTrack.StartGame()` is called, the `OnStart` event will be called with a list of `JoinRequestUser` objects.
 ```csharp
 public void Start() {
 	BioTrack.OnStart((List<JoinRequestUser> users) => {
-		// do something with the users
+		//Do something with the users
 	});
 }
 ```
@@ -47,7 +50,7 @@ public void WinCondition() {
 }
 ```
 
-Setting `doContinue` to true will allow the user to continue playing the game. This is useful for games that have multiple levels or rounds and you want to award points for each round. 
+Setting `doContinue` to true will allow the user to continue playing the game. This is useful for games that have multiple levels or rounds where you want to award points for each round. 
 
 ```csharp
 public void WinCondition() {
@@ -61,7 +64,7 @@ public void WinCondition3() {
 }
 ```
 
-You can also listen in for when a game stops, by adding a function that takes a boolean argument (which represents if the game is continuing or not). 
+You can also listen in for when a game stops using `OnFinish`. By adding a function that takes a boolean argument you can perform different actions based on if the session is continuing or not. 
 
 ```csharp
 public void Start() {
