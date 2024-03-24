@@ -18,6 +18,9 @@ Unity bindings for the biotrack api + examples (this is one of the projects of a
 
 ## Usage
 
+To get started with Biotrack, you will need to attach BioTrackAttachable to a game object in each scene. This will allow you to configure the game id and max players.
+Note, Biotrack can only be configured once, even if there are different configurations per scene.  
+
 When a the number of join requests has reached the max player count, or `BioTrack.StartGame()` is called, the `OnStart` event will be called with a list of `JoinRequestUser` objects.
 ```csharp
 public void Start() {
@@ -44,7 +47,7 @@ public void WinCondition() {
 }
 ```
 
-Setting `doContinue` to true will allow the user to continue playing the game. This is useful for games that have multiple levels or rounds and you want to award points for each round in realtime. 
+Setting `doContinue` to true will allow the user to continue playing the game. This is useful for games that have multiple levels or rounds and you want to award points for each round. 
 
 ```csharp
 public void WinCondition() {

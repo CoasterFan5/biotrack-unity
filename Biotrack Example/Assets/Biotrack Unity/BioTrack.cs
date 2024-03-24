@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 public static class BioTrack
 {
     private static bool active = false;
+    private static bool initalized = false;
     private static string player = "";
     private static string urlPart = "";
     private static int gameId = 0;
@@ -28,12 +29,17 @@ public static class BioTrack
     public static BioTrackAttachable Attached { get; set; }
     public static void Init(string url, int gameId, int maxPlayers = 0)
     {
-        active = false;
-        maxPlayerCount = maxPlayers;
-        player = "";
-        urlPart = url;
-        BioTrack.gameId = gameId;
-        gameUrl = urlPart + "/game/" + gameId;
+        if(!initalized)
+        {
+            active = false;
+            maxPlayerCount = maxPlayers;
+            player = "";
+            urlPart = url;
+            BioTrack.gameId = gameId;
+            gameUrl = urlPart + "/game/" + gameId;
+            initalized = true;
+        }
+        
 
 
     }
@@ -91,8 +97,15 @@ public static class BioTrack
         {
             webRequest.certificateHandler = new CertificateShenanigans();
             yield return webRequest.SendWebRequest();
+            if(webRequest.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log("Biotrack error. Something went wrong while fetching data.");
+                yield break;
+            }
             string rawApiResponse = webRequest.downloadHandler.text;
+            
             JoinRequestList data = JsonConvert.DeserializeObject<JoinRequestList>(rawApiResponse);
+            
             joinRequests = data;
             if(data.joinRequests.Count >= maxPlayerCount)
             {
@@ -106,16 +119,29 @@ public static class BioTrack
     {
         string url = gameUrl + "/ack" + ids;
         url = url.Substring(0, url.Length - 1);
-        Debug.Log(url);
         using (UnityWebRequest webRequest = UnityWebRequest.Post(url, "{}"))
         {
 
             webRequest.certificateHandler = new CertificateShenanigans();
             yield return webRequest.SendWebRequest();
+            if (webRequest.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log("Biotrack error. Something went wrong while fetching data.");
+                yield break;
+            }
             string rawApiResponse = webRequest.downloadHandler.text;
             Debug.Log(rawApiResponse);
             Session session = JsonConvert.DeserializeObject<Session>(rawApiResponse);
-            BioTrack.activeSessionId = session.id;
+            if(session.message != null && session.message.Contains("Game already has an active session"))
+            {
+                Debug.Log("Stopping game");
+                Attached.Finisher(0, false, new object());
+            } else
+            {
+                paused = true;
+                BioTrack.activeSessionId = session.id;
+            }
+            
 
         }
     }
@@ -128,12 +154,17 @@ public static class BioTrack
             paused = false;
         }
 
-        string url = gameUrl + "/finish?score=" + score + "&finished=" + doContinue.ToString() + "&data=" + JsonConvert.SerializeObject(data);
+        string url = gameUrl + "/finish?score=" + score + "&finished=" + (!doContinue).ToString().ToLower() + "&data=" + JsonConvert.SerializeObject(data);
         Debug.Log(url);
         using (UnityWebRequest webRequest = UnityWebRequest.Post(url, "{}"))
         {
             webRequest.certificateHandler = new CertificateShenanigans();
             yield return webRequest.SendWebRequest();
+            if (webRequest.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log("Biotrack error. Something went wrong while fetching data.");
+                yield break;
+            }
         }
     }
 
