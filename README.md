@@ -1,9 +1,9 @@
 # biotrack-unity
-Unity bindings for [Biotrack](https://github.com/LeoDog896/biotrack) + examples (this is one of the projects of all time)
-You should familiarize yourself with the [Biotrack Docs](https://leodog896.github.io/biotrack/) to better understand this project.
+Unity bindings for [Biotrack](https://tristan-f-r.github.io/biotrack) + examples (this is one of the projects of all time)
+You should familiarize yourself with the [Biotrack Docs](https://tristan-f-r.github.io/biotrack) to better understand this project.
 
 ## Quick Notice
-If you are very familiar with C# and web requests, these may not be the bindings for you. In an effort to make implementing Biotrack as simple as possible, the extendability of the [Biotrack API](https://leodog896.github.io/biotrack/api.html) has been reduced significantly. 
+If you are very familiar with C# and web requests, these may not be the bindings for you. In an effort to make implementing Biotrack as simple as possible, the extendability of the [Biotrack API](https://tristan-f-r.github.io/biotrack/api.html) has been reduced significantly. 
 
 ## Getting Started
 1. Download the latest release
